@@ -1,0 +1,135 @@
+<view class="level top-box">
+  <view class="avatar">
+    <image src="{{avatar}}" mode="widthFix"></image>
+  </view>
+  <view class="level info">
+    <view>
+      <view class="name">{{nickName}}</view>
+      <view class="tel">{{phone}}</view>
+    </view>
+    <view bindtap="editClick">🖊</view>
+  </view>
+</view>
+<!-- 数据内容 -->
+<form catchsubmit="formSubmit" catchreset="formReset">
+  <view class="box">
+    <view class="level nav">
+      <view class="dot"></view>
+      <view class="title">基本信息</view>
+    </view>
+    <view class="row">
+      <view>性别</view>
+      <picker class="right" bindchange="bindPickerChange" value="{{indexSex}}" range="{{arraySex}}">
+        <text>{{arraySex[indexSex]}}</text>
+        <text class="triangle">▼</text>
+      </picker>
+    </view>
+    <view class="row">
+      <view>年龄</view>
+      <view class="right">
+        <input name="age" placeholder="请输入年龄" type="number" maxlength="3" />
+      </view>
+    </view>
+    <view class="row">
+      <view>邮箱</view>
+      <view class="right">
+        <input name="mail" placeholder="请输入邮箱信息" maxlength="20" />
+      </view>
+    </view>
+  </view>
+
+  <view class="box">
+    <view class="level nav">
+      <view class="dot"></view>
+      <view class="title">教育背景</view>
+    </view>
+    <view class="row">
+      <view>学校</view>
+      <view class="right">
+        <input name="school" placeholder="请输入就读学校" maxlength="30" />
+      </view>
+    </view>
+    <view class="row">
+      <view>专业</view>
+      <view class="right">
+        <input name="major" placeholder="请输入所学专业" type="number" maxlength="50" />
+      </view>
+    </view>
+    <view class="row">
+      <view>班级</view>
+      <view class="right">
+        <input name="grade" placeholder="请输入所在班级" maxlength="20" />
+      </view>
+    </view>
+  </view>
+
+  <view class="box">
+    <view class="level nav-flex">
+      <view class="level">
+        <view class="dot"></view>
+        <view class="title">生活一角</view>
+      </view>
+      <view class="add-img" bindtap="selectImage" data-tag="1">+</view>
+    </view>
+    <view class="row">
+      <textarea name="certificate" auto-height="true" class="text-area" maxlength="300" placeholder="点击右上角加号可添加图片哦~"></textarea>
+    </view>
+    <view class="attr-img">
+      <block wx:for="{{attrImg}}" wx:for-index="index" wx:for-item="item" wx:key="item">
+        <image bindlongtap="longtapDeleteImg" data-index="{{index}}" bindtap="previewClick" data-url="{{item}}" class="img" src="{{item}}" mode="widthFix"></image>
+      </block>
+    </view>
+  </view>
+
+
+  <view class="box">
+    <view class="level nav">
+      <view class="dot"></view>
+      <view class="title">兴趣爱好</view>
+    </view>
+    <view class="row wrap-box">
+      <block wx:for="{{labelList}}" wx:for-index="index" wx:for-item="item" wx:key="item">
+        <view bindlongtap="longtapDeleteLabel" data-index="{{index}}"  class="add-btn data-btn">{{item}}</view>
+      </block>
+      <view class="add-btn" bindtap="addHobbyClick">+添加</view>
+    </view>
+  </view>
+
+  <view class="level btn-area">
+    <button formType="reset">重置</button>
+    <button type="primary" formType="submit">提交</button>
+  </view>
+</form>
+<!-- 弹出层 -->
+<view class="mask-all" wx:if="{{show}}" bindtap="cancelMask"></view>
+<view class="mask-box" wx:if="{{show}}">
+  <block wx:if="{{hobby}}">
+    <view class="center">
+      <input bindinput="inputHobbyClick" value="{{hobbyVal}}" placeholder="请输入兴趣爱好（5字以内哦~）" maxlength="5" />
+    </view>
+  </block>
+  <block wx:else>
+    <view class="row level">
+      <view>靓照</view>
+      <view class="right" bindtap="selectImage" data-tag="0">
+        <image class="head-img" src="{{tempList.avatarTemp}}"></image>
+      </view>
+    </view>
+    <view class="row">
+      <view>姓名</view>
+      <view class="right">
+        <input placeholder="请输入姓名" bindinput="inputNick" value="{{tempList.nameTemp}}" maxlength="20" />
+      </view>
+    </view>
+    <view class="row">
+      <view>电话</view>
+      <view class="right">
+        <input placeholder="请输入联系电话" bindinput="inputPhone" value="{{tempList.phoneTemp}}" type="number" maxlength="11" />
+      </view>
+    </view>
+  </block>
+  <view class="level mask-btn">
+    <view bindtap="cancelMask">取消</view>
+    <view bindtap="defineMask">确定</view>
+  </view>
+</view>
